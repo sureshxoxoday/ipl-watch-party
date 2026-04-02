@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IPL Watch Party 🏏</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { background: #0a0a15; color: #e8e8f0; font-family: system-ui, -apple-system, sans-serif; }
+      ::-webkit-scrollbar { width: 4px; }
+      ::-webkit-scrollbar-track { background: #13131f; }
+      ::-webkit-scrollbar-thumb { background: #2a2a3e; border-radius: 2px; }
+
+      @keyframes floatUp {
+        0%   { transform: translateY(0) scale(1.2); opacity: 1; }
+        70%  { opacity: 0.9; }
+        100% { transform: translateY(-180px) scale(0.5); opacity: 0; }
+      }
+      @keyframes popIn {
+        0%   { transform: scale(0.5); opacity: 0; }
+        70%  { transform: scale(1.15); }
+        100% { transform: scale(1); opacity: 1; }
+      }
+      @keyframes slideUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to   { transform: translateY(0); opacity: 1; }
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50%       { opacity: 0.5; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
