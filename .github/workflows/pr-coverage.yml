@@ -1,0 +1,38 @@
+name: PR Change Coverage
+on:
+  pull_request:
+    branches: [dev, uat, main, master]
+permissions:            
+  contents: read
+  pull-requests: write
+
+jobs:
+  changed-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0                     # need base-branch history to diff
+
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }           # runner node; app can still target 14/24
+
+      - run: npm ci
+      - run: npx jest --coverage --coverageReporters=cobertura
+
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.x' }
+      - run: pip install diff-cover
+
+      - name: Enforce coverage on changed lines
+        run: |
+          diff-cover coverage/cobertura-coverage.xml \
+            --compare-branch=origin/${{ github.base_ref }} \
+            --fail-under=70 \
+            --markdown-report diff-cover.md
+
+      - name: Comment report on PR
+        if: always()
+        run: gh pr comment ${{ github.event.pull_request.number }} --body-file diff-cover.md
+        env:                                    # <-- block style
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
