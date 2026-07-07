@@ -15,7 +15,7 @@ jobs:
           fetch-depth: 0                     # need base-branch history to diff
 
       - uses: actions/setup-node@v4
-        with: { node-version: 20 }           # runner node; app can still target 14/24
+        with: { node-version: 24 }           # runner node; app can still target 14/24
 
       - run: npm ci
       - run: npx jest --coverage --coverageReporters=cobertura
