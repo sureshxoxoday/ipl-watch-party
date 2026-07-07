@@ -18,6 +18,8 @@ app.use(cors({
 }));
 app.use(express.json({ limit: '512kb' }));
 
+app.use('/coverage', (req, res) => { res.json({ status: 'ok' }); });
+
 app.use('/api', rateLimit({ windowMs: 15 * 60 * 1000, max: 200 }));
 app.use('/api/v1', routes);
 
